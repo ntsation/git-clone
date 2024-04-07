@@ -25,7 +25,7 @@ def clona_repos(user, path):
 
 if __name__  == "__main__":
     user = input("Digite o nome de usuário do Github: ")
-    path = r''
+    path = r''# Digite o caminho da pasta onde quer salvar os repos.
     clona_repos(user, path)
 
     
