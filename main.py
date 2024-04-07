@@ -22,13 +22,16 @@ def clona_repos(user, path):
             repo_caminho = os.path.join(path, repo_nome)
             if not os.path.exists(repo_caminho):
                 subprocess.run(['git', 'clone', repo_url])
-                print("Repositório", repo_nome, "clonado com sucesso em", path)
+                print("Repositório", repo_nome, "clonado com sucesso.")
             else:
                 print("O repositório", repo_nome, "já existe em", path)
+                os.chdir(repo_caminho)
+                subprocess.run(['git','pull'])
+                print("Repositório", repo_nome, "atualizado com sucesso.")
     else:
         print("Nenhum repositório encontrado para o usuário", user)
 
 if __name__  == "__main__":
-    user = 'SEU USUARIO'
+    user = 'USUARIO'
     path = r'CAMINHO DA PASTA'
     clona_repos(user, path)
