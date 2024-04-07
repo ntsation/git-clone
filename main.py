@@ -18,14 +18,17 @@ def clona_repos(user, path):
         os.makedirs(path, exist_ok=True)
         os.chdir(path)
         for repo_url in repos:
-            subprocess.run(['git', 'clone', repo_url])
-        print("Todos os repositórios foram clonados com sucesso em", path)
+            repo_nome = repo_url.split('/')[-1].split('.')[0]
+            repo_caminho = os.path.join(path, repo_nome)
+            if not os.path.exists(repo_caminho):
+                subprocess.run(['git', 'clone', repo_url])
+                print("Repositório", repo_nome, "clonado com sucesso em", path)
+            else:
+                print("O repositório", repo_nome, "já existe em", path)
     else:
         print("Nenhum repositório encontrado para o usuário", user)
 
 if __name__  == "__main__":
-    user = input("Digite o nome de usuário do Github: ")
-    path = r''# Digite o caminho da pasta onde quer salvar os repos.
+    user = 'SEU USUARIO'
+    path = r'CAMINHO DA PASTA'
     clona_repos(user, path)
-
-    
