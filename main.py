@@ -16,22 +16,24 @@ def clona_repos(user, path):
     repos = pega_repos(user)
     if repos:
         os.makedirs(path, exist_ok=True)
-        os.chdir(path)
         for repo_url in repos:
             repo_nome = repo_url.split('/')[-1].split('.')[0]
             repo_caminho = os.path.join(path, repo_nome)
             if not os.path.exists(repo_caminho):
+                os.chdir(path)
                 subprocess.run(['git', 'clone', repo_url])
                 print("Repositório", repo_nome, "clonado com sucesso.")
             else:
                 print("O repositório", repo_nome, "já existe em", path)
                 os.chdir(repo_caminho)
-                subprocess.run(['git','pull'])
-                print("Repositório", repo_nome, "atualizado com sucesso.")
+                # Check if the directory is empty
+                if not os.listdir(repo_caminho):
+                    subprocess.run(['git', 'pull'])
+                    print("Repositório", repo_nome, "atualizado com sucesso.")
     else:
         print("Nenhum repositório encontrado para o usuário", user)
 
 if __name__  == "__main__":
-    user = 'USUARIO'
-    path = r'CAMINHO DA PASTA'
+    user = 'ntsation'
+    path = r'/home/ntsation/repos'  
     clona_repos(user, path)
