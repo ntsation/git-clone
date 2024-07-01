@@ -1,6 +1,7 @@
-import requests 
+import requests
 import subprocess
 import os
+
 
 def pega_repos(user):
     url = f"https://api.github.com/users/{user}/repos"
@@ -11,7 +12,8 @@ def pega_repos(user):
     else:
         print("Erro ao obter os repositórios:", r.status_code)
         return None
-    
+
+
 def clona_repos(user, path):
     repos = pega_repos(user)
     if repos:
@@ -28,12 +30,15 @@ def clona_repos(user, path):
                 os.chdir(repo_caminho)
                 # Check if the directory is empty
                 if not os.listdir(repo_caminho):
-                    subprocess.run(['git', 'pull'])
+                    subprocess.run(['git', 'pull', '--force'])
                     print("Repositório", repo_nome, "atualizado com sucesso.")
+                else:
+                    print("O repositório", repo_nome, "não está vazio. Não foi possível atualizar automaticamente.")
     else:
         print("Nenhum repositório encontrado para o usuário", user)
 
-if __name__  == "__main__":
+
+if __name__ == "__main__":
     user = 'ntsation'
-    path = r'/home/ntsation/repos'  
+    path = r'/home/ntsation/repos'
     clona_repos(user, path)
